@@ -1,6 +1,6 @@
 const User = require('../models/M_users'); //מייבא את הסכימה
 
-const createUser = async(email,password,type,cart,orders,yourProducts)=>{
+const createUser = async(email,password,type,cart,boughtPhotos,uploadedPhotos)=>{
     try {
         const user = new userSchema({
             email: email,
@@ -10,14 +10,14 @@ const createUser = async(email,password,type,cart,orders,yourProducts)=>{
         if(type == 'client')
         {
             user.cart = cart;
-            user.orders = orders;
-            yourProducts = null;
+            user.boughtPhotos = boughtPhotos;
+            uploadedPhotos = null;
         }
         if (type == 'photographer')
         {
             user.cart = null;
-            user.orders = null; 
-            yourProducts = yourProducts;
+            user.boughtPhotos = boughtPhotos; 
+            uploadedPhotos = uploadedPhotos;
         }
         if (type == 'admin')
         //...

@@ -15,24 +15,29 @@ db.once('open', () => {
 const userSchema = new mongoose.Schema({
     email:{
         type:String,
-        required:true
+        required:true,
+        unique: true
     },
     password:{
         type:String,
         required:true
     },
     type:{
-        type:String
+        type:String,
+        required:true
     },
-    cart:{
-        type:[Product]
-    },
-    orders:{
-        type:[Product]
-    },
-    yourProducts:{
-        type:[Product]
-    }
+    cart:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'M_photo'
+    }],
+    boughtPhotos:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'M_photo'
+    }],
+    uploadedPhotos:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'M_photo'
+    }]
 });
 
 // Create the User model

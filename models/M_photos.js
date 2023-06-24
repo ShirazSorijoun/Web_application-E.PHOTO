@@ -12,7 +12,7 @@ db.once('open', () => {
 });
 
 
-const productSchema = new mongoose.Schema({
+const photoSchema = new mongoose.Schema({
   name: {
     name: String,
     required: true 
@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
   }
 });
 
-// Create the User model
-const Product = mongoose.model('Product', productSchema);
-// Export the User model
-module.exports = Product;
+// Create the Photo model
+const Photo = mongoose.model('Product', photoSchema);
+// Export the Photo model
+module.exports = Photo;
