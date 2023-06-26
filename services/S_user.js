@@ -1,4 +1,4 @@
-const User = require('../models/M_User'); //מייבא את הסכימה
+const User = require('../models/M_user'); //מייבא את הסכימה
 
 const createUser = async(email,password,type,cart,boughtPhotos,uploadedPhotos)=>{
     try {

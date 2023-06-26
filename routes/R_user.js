@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const usersControllers = require('../controllers/C_users');
+const usersControllers = require('../controllers/C_user');
 
 router.route('/')
     .get(usersControllers.getUsers)
