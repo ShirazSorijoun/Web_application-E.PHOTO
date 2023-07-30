@@ -16,9 +16,20 @@ const productSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true
+  },
+  numOfPurchases: {
+    type: Number,
+    required: false
+  },
+  uploadedBy: {
+    type: String,
+    required: false
+  },
+  ID:{
+    type: Number,
+    required: true
   }
 });
-
 // Create the Photo model
 const Product = mongoose.model('Product', productSchema);
 // Export the Photo model
