@@ -13,7 +13,11 @@
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="assets/css/animate.min.css">
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0q5dKLycJFkJBlrvMzUXVnfa5EbzijoI&callback=initMap" async defer></script>
+    <script>
+        const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+    </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
 
 </head>
 
@@ -99,30 +103,28 @@
 
     <script>
         // Function to initialize the Google Map
-        function initMap() {
-            // Fetch store locations from the server
-            fetch('/api/store-location')
-                .then((response) => response.json())
-                .then((data) => {
-                    // Create a new Google Map centered on the first store location
-                    const map = new google.maps.Map(document.getElementById('map-container'), {
-                        center: { lat: data[0].lat, lng: data[0].lng },
-                        zoom: 11,
-                    });
-
-                    // Add markers for all store locations
-                    data.forEach((location) => {
-                        const marker = new google.maps.Marker({
-                            position: { lat: location.lat, lng: location.lng },
-                            map: map,
-                            title: location.name,
-                        });
-                    });
-                })
-                .catch((error) => {
-                    console.error('Error fetching store location data:', error);
+      function initMap() {
+        fetch('/api/store-location')
+            .then((response) => response.json())
+            .then((data) => {
+                const map = new google.maps.Map(document.getElementById('map-container'), {
+                    center: { lat: data[0].lat, lng: data[0].lng },
+                  zoom: 11,
                 });
-        }
+
+                // Add markers for all store locations
+                data.forEach((location) => {
+                    const marker = new google.maps.Marker({
+                        position: { lat: location.lat, lng: location.lng },
+                        map: map,
+                        title: location.name,
+                    });
+                });
+            })
+        .catch((error) => {
+            console.error('Error fetching store location data:', error);
+        });
+    }
     </script>
 
 </body>
