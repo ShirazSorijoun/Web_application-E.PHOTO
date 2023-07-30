@@ -1,30 +1,29 @@
+//js
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors')
+const mongoose = require('mongoose');
+const Orders = require('./routes/R_order');
+const newLocal = require('custom-env')  
+newLocal.env(process.env.NODE_ENV,'./config');
 
-  const express = require('express');
-  const session = require('express-session');
-  const mongoose = require('mongoose');
-  
-  const app = express();
-  app.set('view engine', 'ejs');
-  
+// Mongo DB conncetion
+const database = process.env.CONNECTION_STRING || "mongodb://127.0.0.1:27017/proddb";
+mongoose.connect(database,
+    {useNewUrlParser:true,useUnifiedTopology:true})
+    .then(() => console.log("mongo connected"))
+    .catch(err => console.log(err));
 
-  mongoose
-  .connect("mongodb://127.0.0.1:27017/proddb", { //process.env.DB_CONNECTION_STRING
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-  })
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.log(err));
 
-  app.use(
-    session({
-      secret: "foo" ,//process.env.SESSION_SECRET
-      saveUninitialized: false,
-      resave: false,
-    })
-  );
-  app.use(express.urlencoded({ extended: false }));
-  
-  app.use('/', require('./routes/R_login'));
-  
-  const PORT = process.env.PORT || 4111;
-  app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+const app = express();
+app.use(cors());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.json());
+
+
+//Routes
+app.use('/cart', Orders);
+const PORT = process.env.PORT ||  4111;
+app.listen(PORT, console.log("Server do start for port: " + PORT))
+
+//module.exports = app;
