@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const  Basket  = require('../controllers/C_shopping_cart'); // Correct the import statement
+const Basket  = require('../controllers/C_shopping_cart'); // Correct the import statement
 
 router.route('/')
     .get(Basket.getBaskets)

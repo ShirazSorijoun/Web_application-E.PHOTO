@@ -1,5 +1,6 @@
 const path = require('../services/S_order');
 
+
 const updateBasket = (req, res) => {
   const filePath = path.join(__dirname, '../views/views/cart.html'); // Correct the file path
   res.sendFile(filePath); // Send the file as the response
@@ -31,9 +32,6 @@ const createBasket = async (req,res) => {
   const Basket = await path.createBasket();
   res.json(Basket)
 }
-
-
-
 
 const deleteBasket = async (req,res) => {
   const Basket = await path.deleteBasketById(req.params.id);
@@ -79,7 +77,7 @@ module.exports = {
     createBasket,
     deleteBasket,
     deleteProduct,
-    addProduct   
+    addProduct,  
 
 }
 
