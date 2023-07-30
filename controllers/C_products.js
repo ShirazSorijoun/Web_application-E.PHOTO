@@ -1,9 +1,5 @@
 const path = require('../services/S_products');
 
-function getProducts1(){
-  console.log("hi");
-}
- 
 const getProducts = async (req,res) => {
     const prods = await path.getProducts();
     res.json(prods);
