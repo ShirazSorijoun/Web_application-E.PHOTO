@@ -33,6 +33,49 @@ app.use(express.json());
 
 app.use('/cart', Orders);
 const PORT = process.env.PORT ||  4111;
-app.listen(PORT, console.log("Server do start for port: " + PORT))
 
 //module.exports = app;
+
+// Start the server
+app.listen(PORT, console.log("Server do start for port: " + PORT))
+
+// Define the Product Model
+const productSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    price: { type: Number, required: true },
+    description: { type: String, required: false },
+    category: {type:String, required: true},
+    numOfPurchases: {type: Number, required: false },
+    uploadedBy: {type: String,required: false},
+    ID:{type: Number, required: true }
+  });
+  
+  const Product = mongoose.model('Product', productSchema);
+
+  // Controller: Add product to the database
+const addProductController = async (req, res) => {
+    try {
+      const { name, price, description, category,numOfPurchases,uploadedBy, ID} = req.body;
+  
+      const newProduct = new Product({
+        name,
+        price,
+        description,
+        category,
+        numOfPurchases,
+        uploadedBy,
+        ID,
+      });
+  
+      await newProduct.save();
+  
+      res.status(201).json({ message: 'Product added successfully' });
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to add product' });
+    }
+  };
+
+  // Routes
+app.post('/products', addProductController);
+
+
