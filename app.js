@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Orders = require('./routes/R_order');
 const Products = require('./routes/R_products');
+const Locations = require('./routes/R_location')
 const customEnv = require('custom-env');
 
 customEnv.env(process.env.NODE_ENV, './config');
@@ -38,6 +40,7 @@ app.use(express.static('public', {
 // Routes
 app.use('/cart', Orders);
 app.use('/Product', Products);
+app.use('/Location', Locations);
 
 const PORT = process.env.PORT || 4111;
 

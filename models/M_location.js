@@ -1,5 +1,6 @@
 const mongoose = require ('mongoose');
 
+/*
 mongoose.connect('mongodb://<db_username>:<db_password>@<db_host>/<db_name>', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -10,6 +11,8 @@ db.on('error', console.error.bind(console, 'Connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB!');
 });
+
+*/
 
 const storeLocationSchema = new mongoose.Schema({
   name: {
