@@ -7,7 +7,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const Orders = require('./routes/R_order');
+
 const Products = require('./routes/R_products');
+const Product = require('./models/M_product');
+const productsData = require('./data/products');
+
 const Locations = require('./routes/R_location')
 const customEnv = require('custom-env');
 
@@ -58,6 +62,24 @@ app.use(express.static('public', {
   }
 }));
 */
+
+//ADDING DATA 
+
+
+ // Save the products array to the MongoDB collection
+ Product.insertMany(productsData)
+ .then(() => {
+   console.log('Products data saved to MongoDB');
+   mongoose.disconnect(); // Close the connection after saving data
+ })
+ .catch((error) => {
+   console.error('Error saving products data to MongoDB:', error);
+   mongoose.disconnect(); // Close the connection on error
+ }).catch((error) => {
+console.error('Error connecting to MongoDB:', error);
+});
+
+
 
 // Routes
 app.use('/cart', Orders);

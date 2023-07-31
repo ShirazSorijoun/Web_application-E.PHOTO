@@ -1,4 +1,14 @@
 const path = require('../services/S_products');
+const products = require("../data/products");
+
+ const getAllProducts = async (req, res, next) => {
+  try {
+    const products = await Product.find({});
+    res.render("products", { products });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const getProducts = async (req,res) => {
     const prods = await path.getProducts();
@@ -43,5 +53,6 @@ const getProducts = async (req,res) => {
     getProducts,
     getProduct,
     addProductController,
+    getAllProducts
 
 }
