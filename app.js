@@ -1,4 +1,7 @@
-require('dotenv').config();
+
+const dotenv = require('dotenv');
+dotenv.config({ path: './config/.env' });
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -8,15 +11,34 @@ const Products = require('./routes/R_products');
 const Locations = require('./routes/R_location')
 const customEnv = require('custom-env');
 
+
 customEnv.env(process.env.NODE_ENV, './config');
+
+const app = express(); // Initialize the 'app' variable here
+
+// google map
+app.get('/api/google-maps-key', (req, res) => {
+  res.json({ apiKey: process.env.GOOGLE_MAPS_API_KEY });
+});
+
+app.get('/api/store-location', (req, res) => {
+  // Your code to fetch store location data from the database or any other source
+  // For example:
+  const storeLocations = [
+    { lat: 40.7128, lng: -74.0060, name: 'New York' },
+    { lat: 34.0522, lng: -118.2437, name: 'Los Angeles' },
+    // Add more store locations as needed
+  ];
+
+  res.json(storeLocations); // Send the store location data as a JSON response
+});
+
 
 // Mongo DB connection
 const database = process.env.CONNECTION_STRING || 'mongodb://127.0.0.1:27017/proddb';
 mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Mongo connected'))
   .catch(err => console.log(err));
-
-const app = express();
 
 app.use(express.static(__dirname + '/views/views'));
 app.use(cors());

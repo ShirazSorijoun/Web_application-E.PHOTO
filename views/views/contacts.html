@@ -14,12 +14,32 @@
     <link rel="stylesheet" href="assets/css/animate.min.css">
 
     <script>
-        const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+        const apiKeyUrl = '/api/google-maps-key';
+
+        fetch(apiKeyUrl)
+            .then((response) => response.json())
+            .then((data) => {
+                const GOOGLE_MAPS_API_KEY = data.apiKey;
+                const scriptTag = document.createElement('script');
+                scriptTag.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&callback=initMap`;
+                scriptTag.async = true;
+                scriptTag.defer = true;
+                scriptTag.onerror = handleMapError; // Set the error handler
+                document.head.appendChild(scriptTag);
+            })
+            .catch((error) => {
+                console.error('Error fetching Google Maps API key:', error);
+                handleMapError(); // Call the error handler in case of fetch error
+            });
+
+        function handleMapError() {
+            // Function to display an error message
+            const mapContainer = document.getElementById('map-container');
+            mapContainer.innerHTML = '<div style="text-align: center; font-size: 18px; padding: 20px;">Failed to load the map. Please try again later.</div>';
+        }
     </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
-
 </head>
+
 
 <body>
     <nav class="navbar navbar-light navbar-expand-md sticky-top navbar-shrink py-3" id="mainNav">
@@ -49,8 +69,9 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-center">
-                <!--  <div class="col"><iframe allowfullscreen="" frameborder="0" loading="lazy" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD0q5dKLycJFkJBlrvMzUXVnfa5EbzijoI&amp;q=Israel%2C+Rishon+Lezion%2CElie+Wiesel+Street+1&amp;zoom=11" width="100%" height="400"></iframe></div> -->
-                <div id="map-container" style="width: 100%; height: 400px;"></div>
+                <div class="col" id="mapColumn">
+                    <div id="map-container" style="width: 100%; height: 400px;"></div>     
+                </div>
                 <div class="col-md-6 col-xl-4">
                     <div>
                         <form class="p-3 p-xl-4" method="post" data-bs-theme="light">
@@ -121,9 +142,12 @@
                     });
                 });
             })
-        .catch((error) => {
-            console.error('Error fetching store location data:', error);
-        });
+            .catch((error) => {
+                console.error('Error fetching store location data:', error);
+                // Display a message on the page if there was an error fetching the data
+                const mapContainer = document.getElementById('map-container');
+                mapContainer.innerHTML = 'Failed to load the map. Please try again later.';
+            });
     }
     </script>
 
