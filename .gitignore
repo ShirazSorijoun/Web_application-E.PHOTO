@@ -2,3 +2,4 @@
 # dotenv
 .env
 
+config/.env
