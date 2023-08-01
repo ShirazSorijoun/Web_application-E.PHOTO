@@ -16,6 +16,7 @@ const Locations = require('./routes/R_location')
 const customEnv = require('custom-env');
 
 
+
 customEnv.env(process.env.NODE_ENV, './config');
 
 const app = express(); // Initialize the 'app' variable here
@@ -85,6 +86,7 @@ console.error('Error connecting to MongoDB:', error);
 app.use('/cart', Orders);
 app.use('/Product', Products);
 app.use('/Location', Locations);
+app.use('/controllers', express.static('controllers'));
 
 const PORT = process.env.PORT || 4111;
 
