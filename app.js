@@ -44,7 +44,7 @@ mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Mongo connected'))
   .catch(err => console.log(err));
 
-app.use(express.static(__dirname + '/views/views'));
+app.use(express.static(__dirname + '/views/'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
@@ -62,7 +62,7 @@ app.use(express.static('public', {
   }
 }));
 */
-
+/////////////////
 //ADDING DATA 
 
 
@@ -79,7 +79,7 @@ app.use(express.static('public', {
 console.error('Error connecting to MongoDB:', error);
 });
 
-
+///////////////////
 
 // Routes
 app.use('/cart', Orders);
