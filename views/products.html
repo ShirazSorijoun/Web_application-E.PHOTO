@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -52,51 +51,25 @@
                 </div>
             </div>
         </div>
-       
-        <div class = "container">
-
-
-            <button   onclick="getAllProducts()"  >clickme</button>
-           <div class = "image">
-            <img src="assets/img/download (1).jpeg" alt ="pic1">
-            
-            <h3> Flowers </h3>  
-            <h3> $ 15.00 </h3>
-            <a class = "add-cart cart1" href="#">Add Cart</a>
-            <input type ="hidden" value="15"/>
-           </div>
-
-           <div class = "image">
-            <img src="assets/img/images.jpeg" alt ="pic1">
-            
-            <h3> Nature </h3>  
-            <h3> $ 30.00 </h3>
-            <a class = "add-cart cart2" href="#">Add Cart</a>
-            <input type ="hidden" value="30"/>
-           </div>
-
-           <div class = "image">
-            <img src="assets/img/download.jpeg" alt ="pic1">
-            
-            <h3> Space </h3>  
-            <h3> $ 20.00 </h3>
-            <a class = "add-cart cart3" href="#">Add Cart</a>
-            <input type ="hidden" value="20"/>
-           </div>
-
-        </div>
-        
-
     </section>
+
     <footer class="bg-primary-gradient"></footer>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.reflowhq.com/v2/toolkit.min.js"></script>
     <script src="assets/js/aos.min.js"></script>
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/bold-and-bright.js"></script>
-    <script src ="/controllers/C_products.js"></script>
 
+    <script src="/controllers/C_products.js"></script>
+     <script >
+
+  // Call the displayProducts method from C_products when the page loads
+  window.onload = async () => {
+    await C_products.displayProducts();
+  };
+</script>
     
+   
 </body>
 
 </html>

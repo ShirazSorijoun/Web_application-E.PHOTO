@@ -55,17 +55,6 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
-/*
-app.use(express.static('public', {
-  setHeaders: (res, path) => {
-      if (path.endsWith('.js')) {
-          res.setHeader('Content-Type', 'application/javascript');
-      }
-  }
-}));
-*/
-
-/////////////////
 
 
  // Save the products array to the MongoDB collection
@@ -80,8 +69,6 @@ app.use(express.static('public', {
  }).catch((error) => {
 console.error('Error connecting to MongoDB:', error);
 });
-
-///////////////////
 
 
 // google map
@@ -114,11 +101,12 @@ app.get('/contacts.html', (req, res) => {
 
 
 // Routes
-app.use('/cart', Orders);
-app.use('/Product', Products);
+app.use(Orders);
+app.use(Products);
 app.use(Locations);
 app.use('/controllers', express.static('controllers'));
 app.use('/routes', express.static('routes'));
+//app.use('/services', express.static('services'));
 app.use('/views', express.static('views'));
 app.use('/views/assets', express.static('assets'));
 app.use('/views/assets/js', express.static('js'));
