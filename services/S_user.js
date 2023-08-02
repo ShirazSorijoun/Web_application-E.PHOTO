@@ -1,65 +1,45 @@
 const User = require('../models/M_user'); //מייבא את הסכימה
 
-const createUser = async(email,password,type,cart,boughtPhotos,uploadedPhotos)=>{
-    try {
-        const user = new userSchema({
-            email: email,
-            password: password,
-            type: type
+const userService = {
+
+    addUser: async (email, firstName, lastName, password) => {
+        try{
+        const user = new User({
+            email,
+            password,
+            firstName,
+            lastName,
+            type: 'basic'
         });
-        if(type == 'client')
-        {
-            user.cart = cart;
-            user.boughtPhotos = boughtPhotos;
-            uploadedPhotos = null;
+        await user.save();
+        } catch(error){
+            console.error('Error in addUser function:', error);
         }
-        if (type == 'photographer')
-        {
-            user.cart = null;
-            user.boughtPhotos = boughtPhotos; 
-            uploadedPhotos = uploadedPhotos;
-        }
-        if (type == 'admin')
-        //...
-        //...
+    },
 
-        return await user.save();
-    } catch(error){
-        console.error('Error in createUser function:', error);
+    getAllUsers: async () =>{
+        return await User.find().populate('boughtProduct');
+    },
+
+    getUserByFirstNameSearch: async (name) => {
+        return await User.find({ firstName: {$regex: '^.*' + name + '.*$' , $options: 'i'} }).populate('boughtProduct');
+    },
+
+    getUserByEmail: async (email) => {
+        return await User.findOne({ email: email }).populate('boughtProduct');
+    },
+
+    getUserByEmailAndPass: async (email, password) => {
+        return await User.findOne({ email, password });
+    },
+
+    updateUser: async (user) => {
+        return await User.findOneAndUpdate({ _id: user._id }, user);
+    },
+
+    deleteUser: async (_id) => {
+        return await User.findOneAndDelete({ _id });
     }
-};
-
-
-const getUserByEmail = async(email)=>{
-    return await User.find(email);
 }
 
-const updateUserPasswordByEmail = async(email, newPassword)=>{
-    const user = await getUserByEmail(email);
-    if (!user)
-    return null;
-
-    user.password = newPassword;
-    await user.save();
-    return user;
-}
-
-const deleteUserByEmail = async(email) =>{
-    const user = await getUserByEmail(email);
-    if (!user)
-    return null;
-
-    await user.remove();
-    return user;
-}
-
-//...
-//...
-
-
-module.exports = {
-    createUser,
-    getUserByEmail,
-    updateUserPasswordByEmail,
-    deleteUserByEmail
-}
+module.exports = userService;

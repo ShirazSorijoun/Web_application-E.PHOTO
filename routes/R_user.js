@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const usersControllers = require('../controllers/C_user');
+const userControllers = require('../controllers/C_user');
 
 router.route('/')
-    .get(usersControllers.getUsers)
-    .post(usersControllers.createUser);
+    .get(userControllers.getAllUsers)
+    .post(userControllers.addUser);
 
 router.route('/:email')
-    .get(usersControllers.getUserByEmail)
-    .put(usersControllers.updateUserPasswordByEmail)
-    .delete(usersControllers.deleteUserByEmail);
+    .get(userControllers.getUserByEmail)
+    .put(userControllers.updateUserPasswordByEmail)
+    .delete(userControllers.deleteUserByEmail);
+
+module.exports = router;
