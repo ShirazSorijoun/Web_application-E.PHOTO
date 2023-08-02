@@ -66,7 +66,7 @@ app.use(express.static('public', {
 /////////////////
 //ADDING DATA 
 
-
+/*
  // Save the products array to the MongoDB collection
  Product.insertMany(productsData)
  .then(() => {
@@ -79,7 +79,7 @@ app.use(express.static('public', {
  }).catch((error) => {
 console.error('Error connecting to MongoDB:', error);
 });
-
+*/
 ///////////////////
 
 // Routes
