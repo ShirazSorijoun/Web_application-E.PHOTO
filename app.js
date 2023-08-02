@@ -1,4 +1,3 @@
-
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/.env' });
 
@@ -67,7 +66,8 @@ app.use(express.static('public', {
 
 /////////////////
 
-
+//ADDING DATA ------------------------------ DO NOT DELETE!!!!!!!!!!!!!!!!!!! ----------------------------------------------
+/*
  // Save the products array to the MongoDB collection
  Product.insertMany(productsData)
  .then(() => {
@@ -80,6 +80,20 @@ app.use(express.static('public', {
  }).catch((error) => {
 console.error('Error connecting to MongoDB:', error);
 });
+
+// save the store locations to the MongoDB collection
+ Location.insertMany(locationsData)
+ .then(() => {
+   console.log('Locations data saved to MongoDB');
+  // mongoose.disconnect(); // Close the connection after saving data
+ })
+ .catch((error) => {
+   console.error('Error saving locations data to MongoDB:', error);
+   mongoose.disconnect(); // Close the connection on error
+ }).catch((error) => {
+console.error('Error connecting to MongoDB:', error);
+});
+*/
 
 ///////////////////
 
@@ -122,8 +136,3 @@ app.use('/routes', express.static('routes'));
 app.use('/views', express.static('views'));
 app.use('/views/assets', express.static('assets'));
 app.use('/views/assets/js', express.static('js'));
-
-
-
-
-
