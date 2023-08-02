@@ -1,58 +1,70 @@
 const path = require('../services/S_products');
 const products = require("../data/products");
 
- const getAllProducts = async (req, res, next) => {
+
+const C_products = {
+
+// returns all Products without the id of each product
+getAll: async ()=> {
+  return await S_products.getAll();
+},
+
+updateProduct: async (product)=> {
+  return await S_products.updateProduct(product);
+},
+
+getProductByNameSearch: async (name)=> {
+  if(name)
+      return await S_products.getProductByNameSearch(name);
+  return await S_products.getAll();
+},
+deleteProduct: async (_id)=> {
+  return await S_products.deleteProduct(_id);
+},
+
+
+addProduct: async (name,image,brand,category,price,countInStock,rating,numReviews,description)=> {
+  try{
+      return await S_products.addProduct(name,image,brand,category,price,countInStock,rating,numReviews,description);
+  }
+  catch(e){
+      console.log(e);
+      res.json({error:e});
+  }
+},
+
+ displayProducts : async()=>{
   try {
-    const products = await Product.find({});
-    res.render("products", { products });
-  } catch (error) {
-    next(error);
-  }
-};
+      const productList = await S_products.getAll();
+      const productContainer = document.querySelector('[data-reflow-type="product-list"]');
 
-const getProducts = async (req,res) => {
-    const prods = await path.getProducts();
-    res.json(prods);
-  }
-  
-  const getProduct = async (req,res) => {
-    const prod = await path.getProductById(req.params.id);
-    if (!prod){
-      return res.status(404).json({errors:['Basket not found']});
-    }
-    res.json(prod);
-  }
+      productList.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.classList.add('product-card');
 
+          productCard.innerHTML = `
+              <h2>${product.name}</h2>
+              <img src="${product.image}" alt="${product.name}">
+              <p>${product.description}</p>
+              <span>Price: $${product.price}</span>
+              <button>Add to Cart</button>
+          `;
 
- // Controller: Add product to the database
-  const addProductController = async (req, res) => {
-    try {
-      const { name, price, description, category,numOfPurchases,uploadedBy, ID} = req.body;
-  
-      const newProduct = new Product({
-        name,
-        price,
-        description,
-        category,
-        numOfPurchases,
-        uploadedBy,
-        ID,
+          productContainer.appendChild(productCard);
       });
-  
-      await newProduct.save();
-  
-      res.status(201).json({ message: 'Product added successfully' });
-    } catch (error) {
-      res.status(500).json({ message: 'Failed to add product' });
-    }
-  };
+  } catch (error) {
+      console.error(error);
+  }
+}
 
-
-
-  module.exports = {
-    getProducts,
-    getProduct,
-    addProductController,
-    getAllProducts
 
 }
+
+module.exports =   C_products ;
+
+
+
+
+
+
+

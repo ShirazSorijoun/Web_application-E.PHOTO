@@ -1,4 +1,3 @@
-
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/.env' });
 
@@ -6,44 +5,45 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+
 const Orders = require('./routes/R_order');
-
 const Products = require('./routes/R_products');
-const Product = require('./models/M_product');
-const productsData = require('./data/products');
+const Locations = require('./routes/R_location');
 
-const Locations = require('./routes/R_location')
 const customEnv = require('custom-env');
-
-
-
+const path = require('path'); 
 customEnv.env(process.env.NODE_ENV, './config');
 
+const Product = require('./models/M_product');
+const Location = require('./models/M_location');
+
+const productsData = require('./data/products');
+const locationsData = require('./data/locations');
+
 const app = express(); // Initialize the 'app' variable here
+//app.set('view engine', 'ejs'); // might not be neede (added when trying to fix the map)
 
-// google map
-app.get('/api/google-maps-key', (req, res) => {
-  res.json({ apiKey: process.env.GOOGLE_MAPS_API_KEY });
-});
-
-app.get('/api/store-location', (req, res) => {
-  // Your code to fetch store location data from the database or any other source
-  // For example:
-  const storeLocations = [
-    { lat: 40.7128, lng: -74.0060, name: 'New York' },
-    { lat: 34.0522, lng: -118.2437, name: 'Los Angeles' },
-    // Add more store locations as needed
-  ];
-
-  res.json(storeLocations); // Send the store location data as a JSON response
-});
 
 
 // Mongo DB connection
-const database = process.env.CONNECTION_STRING || 'mongodb://127.0.0.1:27017/proddb';
-mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Mongo connected'))
-  .catch(err => console.log(err));
+const database = process.env.CONNECTION_STRING // || 'mongodb://127.0.0.1:27017/proddb';
+
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(database, { useNewUrlParser: true, useUnifiedTopology: true });
+    console.log('MongoDB connected successfully');
+
+    // Start the server after the connection is successful
+    const PORT = process.env.PORT // || 4111;
+    app.listen(PORT, () => console.log('Server started on port: ' + PORT));
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+  }
+};
+
+// Call the function to connect to MongoDB
+connectToMongoDB();
+
 
 app.use(express.static(__dirname + '/views/'));
 app.use(cors());
@@ -63,15 +63,16 @@ app.use(express.static('public', {
   }
 }));
 */
-/////////////////
-//ADDING DATA 
 
+/////////////////
+
+//ADDING DATA ------------------------------ DO NOT DELETE!!!!!!!!!!!!!!!!!!! ----------------------------------------------
 
  // Save the products array to the MongoDB collection
  Product.insertMany(productsData)
  .then(() => {
    console.log('Products data saved to MongoDB');
-   mongoose.disconnect(); // Close the connection after saving data
+   //mongoose.disconnect(); // Close the connection after saving data
  })
  .catch((error) => {
    console.error('Error saving products data to MongoDB:', error);
@@ -80,14 +81,59 @@ app.use(express.static('public', {
 console.error('Error connecting to MongoDB:', error);
 });
 
+// save the store locations to the MongoDB collection
+ Location.insertMany(locationsData)
+ .then(() => {
+   console.log('Locations data saved to MongoDB');
+  // mongoose.disconnect(); // Close the connection after saving data
+ })
+ .catch((error) => {
+   console.error('Error saving locations data to MongoDB:', error);
+   mongoose.disconnect(); // Close the connection on error
+ }).catch((error) => {
+console.error('Error connecting to MongoDB:', error);
+});
+
+
 ///////////////////
+
+
+// google map
+
+const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+console.log('Process Environment:', process.env); // delete after fixing
+const encodedApiKey = encodeURIComponent(apiKey); // delete after fixing
+console.log('API Key enco:', encodedApiKey); // Check if the API key is loaded correctly - delete after fixing
+console.log('API Key:', apiKey); // Check if the API key is loaded correctly
+app.get('/contacts.html', (req, res) => {
+  res.render('contacts', { encodedApiKey }); // change encodedApiKey to apiKey after fixing
+});
+
+/*
+console.log('API Key:', process.env.GOOGLE_MAPS_API_KEY); // Check if the API key is loaded correctly
+
+app.get('/api/google-maps-key', (req, res) => {
+  res.json({ apiKey: process.env.GOOGLE_MAPS_API_KEY });
+});
+
+
+// Route for serving contacts.html and injecting the API key
+app.get('/contacts.html', (req, res) => {
+  const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+  res.sendFile(path.join(__dirname,'views', 'contacts.html')
+    .replace('YOUR_GOOGLE_MAPS_API_KEY', apiKey));
+});
+
+*/
+
 
 // Routes
 app.use('/cart', Orders);
 app.use('/Product', Products);
-app.use('/Location', Locations);
+app.use(Locations);
 app.use('/controllers', express.static('controllers'));
-
-const PORT = process.env.PORT || 4111;
-
-app.listen(PORT, () => console.log('Server started on port: ' + PORT));
+app.use('/routes', express.static('routes'));
+app.use('/views', express.static('views'));
+app.use('/services', express.static('services'));
+app.use('/views/assets', express.static('assets'));
+app.use('/views/assets/js', express.static('js'));
