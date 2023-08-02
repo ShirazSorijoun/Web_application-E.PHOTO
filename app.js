@@ -67,7 +67,7 @@ app.use(express.static('public', {
 /////////////////
 
 //ADDING DATA ------------------------------ DO NOT DELETE!!!!!!!!!!!!!!!!!!! ----------------------------------------------
-/*
+
  // Save the products array to the MongoDB collection
  Product.insertMany(productsData)
  .then(() => {
@@ -93,7 +93,7 @@ console.error('Error connecting to MongoDB:', error);
  }).catch((error) => {
 console.error('Error connecting to MongoDB:', error);
 });
-*/
+
 
 ///////////////////
 
@@ -134,5 +134,6 @@ app.use(Locations);
 app.use('/controllers', express.static('controllers'));
 app.use('/routes', express.static('routes'));
 app.use('/views', express.static('views'));
+app.use('/services', express.static('services'));
 app.use('/views/assets', express.static('assets'));
 app.use('/views/assets/js', express.static('js'));
