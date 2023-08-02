@@ -1,5 +1,5 @@
 //js
-const User = require('../services/S_user');
+const User = require('../services/login');
 const bcrypt = require("bcryptjs");
 //For Register Page
 const registerView = (req, res) => {
