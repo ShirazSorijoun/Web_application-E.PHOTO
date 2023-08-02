@@ -128,8 +128,8 @@ app.get('/contacts.html', (req, res) => {
 
 
 // Routes
-app.use('/cart', Orders);
-app.use('/Product', Products);
+app.use( Orders);
+app.use( Products);
 app.use(Locations);
 app.use('/controllers', express.static('controllers'));
 app.use('/routes', express.static('routes'));
