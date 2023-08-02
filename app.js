@@ -1,4 +1,3 @@
-
 const dotenv = require('dotenv');
 dotenv.config({ path: './config/.env' });
 
@@ -55,8 +54,20 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
 
+/*
+app.use(express.static('public', {
+  setHeaders: (res, path) => {
+      if (path.endsWith('.js')) {
+          res.setHeader('Content-Type', 'application/javascript');
+      }
+  }
+}));
+*/
 
+/////////////////
 
+//ADDING DATA ------------------------------ DO NOT DELETE!!!!!!!!!!!!!!!!!!! ----------------------------------------------
+/*
  // Save the products array to the MongoDB collection
  Product.insertMany(productsData)
  .then(() => {
@@ -69,6 +80,22 @@ app.get('/', function (req, res) {
  }).catch((error) => {
 console.error('Error connecting to MongoDB:', error);
 });
+
+// save the store locations to the MongoDB collection
+ Location.insertMany(locationsData)
+ .then(() => {
+   console.log('Locations data saved to MongoDB');
+  // mongoose.disconnect(); // Close the connection after saving data
+ })
+ .catch((error) => {
+   console.error('Error saving locations data to MongoDB:', error);
+   mongoose.disconnect(); // Close the connection on error
+ }).catch((error) => {
+console.error('Error connecting to MongoDB:', error);
+});
+*/
+
+///////////////////
 
 
 // google map
@@ -101,17 +128,11 @@ app.get('/contacts.html', (req, res) => {
 
 
 // Routes
-app.use(Orders);
-app.use(Products);
+app.use('/cart', Orders);
+app.use('/Product', Products);
 app.use(Locations);
 app.use('/controllers', express.static('controllers'));
 app.use('/routes', express.static('routes'));
-//app.use('/services', express.static('services'));
 app.use('/views', express.static('views'));
 app.use('/views/assets', express.static('assets'));
 app.use('/views/assets/js', express.static('js'));
-
-
-
-
-
