@@ -1,4 +1,4 @@
-const User = require("../models/M_User");
+//const User = require("../models/"); - should creat file for register data 
 
 async function login(username, password) {
     const user = await User.findOne({ _id: username, password });

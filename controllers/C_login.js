@@ -1,5 +1,5 @@
 //js
-const User = require("../models/M_User");
+const User = require('../services/S_user');
 const bcrypt = require("bcryptjs");
 //For Register Page
 const registerView = (req, res) => {
