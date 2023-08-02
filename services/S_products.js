@@ -2,7 +2,7 @@ const Product = require('../models/M_product')
 
 const S_Product = {
 
-    addBranch: async (name,image,brand,category,price,countInStock,rating,numReviews,description)=> {
+    addProduct: async (name,image,brand,category,price,countInStock,rating,numReviews,description)=> {
 
         const product = new Product({
             name,

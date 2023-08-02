@@ -1,5 +1,5 @@
-const path = require('../services/S_products');
-const products = require("../data/products");
+const S_products = require('../services/S_products');
+//const products = require("../data/products");
 
 
 const C_products = {

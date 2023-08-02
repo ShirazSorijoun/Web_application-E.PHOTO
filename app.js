@@ -21,7 +21,7 @@ const productsData = require('./data/products');
 const locationsData = require('./data/locations');
 
 const app = express(); // Initialize the 'app' variable here
-//app.set('view engine', 'ejs'); // might not be neede (added when trying to fix the map)
+app.set('view engine', 'ejs'); // might not be neede (added when trying to fix the map)
 
 
 
@@ -63,7 +63,7 @@ app.use(express.static('public', {
   }
 }));
 */
-
+/*
 /////////////////
 
 //ADDING DATA ------------------------------ DO NOT DELETE!!!!!!!!!!!!!!!!!!! ----------------------------------------------
@@ -94,7 +94,7 @@ console.error('Error connecting to MongoDB:', error);
 console.error('Error connecting to MongoDB:', error);
 });
 
-
+*/
 ///////////////////
 
 
