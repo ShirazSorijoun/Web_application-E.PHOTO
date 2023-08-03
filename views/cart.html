@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <link rel="stylesheet" href="assets/css/bs-theme-overrides.css">
     <link rel="stylesheet" href="assets/css/animate.min.css">
+     <!-- Bootstrap 5 CSS -->
+   
+      
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="assets/css/demo.css">
+	<!-- Demo CSS (No need to include it into your project) -->
+	<link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
@@ -36,7 +43,48 @@
     <section class="py-5">
         <div class="container py-5">
             <div class="row mx-auto">
-                
+                <div class="action">
+ </div>
+ </header>
+ <main>
+<div class="shopping-cart-wrapper">
+  <table class="table is-fullwidth shopping-cart">
+    <thead>
+      <tr>
+        <th><abbr title="Position"></abbr></th>
+        <th></th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th></th>
+      </tr>
+    </thead>
+  </table>
+  <div class="totals">
+    <div class="totals-item">
+      <label>Subtotal</label>
+      <div class="totals-value" id="cart-subtotal">$0</div>
+    </div>
+    <div class="totals-item">
+      <label>Tax (5%)</label>
+      <div class="totals-value" id="cart-tax">$0</div>
+    </div>
+    <div class="totals-item">
+      <label>Shipping</label>
+      <div class="totals-value" id="cart-shipping">$0</div>
+    </div>
+    <div class="totals-item totals-item-total">
+      <label>Grand Total</label>
+      <div class="totals-value" id="cart-total">$0</div>
+    </div>
+  </div>
+  <button class="checkout">Checkout</button>
+</div>
+ </main>
+  <footer class="credit"><a title="Awesome web design code & scripts" href="https://www.codehim.com?source=demo-page" target="_blank"></a></footer>
+  
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script  src="./js/script.js"></script>
                 <div class="col">
                     <div data-reflow-type="shopping-cart"></div>
                 </div>

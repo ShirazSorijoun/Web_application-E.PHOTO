@@ -1,0 +1,48 @@
+.shopping-cart-wrapper {
+  margin-top: 15px;
+  padding: 20px;
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.totals-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.totals-item label {
+  flex: 1;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.totals-value {
+  flex: 0.5;
+  text-align: right;
+}
+
+.totals-item-total {
+  font-weight: bold;
+}
+
+.checkout {
+  border: none;
+  margin-top: 20px;
+  padding: 6px 25px;
+  background-color: #6b6;
+  color: #fff;
+  font-size: 25px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.checkout:hover {
+  background-color: #58c358;
+  transition: background-color 0.3s;
+}
